@@ -26,7 +26,7 @@ const Notifications = () => {
       justifyContent={{ base: "center", md: "flex-start" }}
     >
       <NotificationsLogo/>
-      <Box display={{ base: "none", md: "block" }}>Notification</Box>
+      <Box display={{ base: "none", md: "block" }}>Notifications</Box>
     </Flex>
   </Tooltip>
   )
