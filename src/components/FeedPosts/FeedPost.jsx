@@ -5,14 +5,14 @@ import { Image,Box } from '@chakra-ui/react'
 import useGetUserProfileById from '../../hooks/useGetUserProfileById'
 
 const FeedPost = ({ post }) => {
-  const { useProfile } = useGetUserProfileById(post.createdBy);
+  const { userProfile } = useGetUserProfileById(post.createdBy);
 
   return <>
-      <PostHeader post={post} creatorProfile={useProfile} />
+      <PostHeader post={post} creatorProfile={userProfile} />
       <Box my={2} borderRadius={4} overflow={"hidden"}>
           <Image  src={post.imageURL} alt={"FEED POST IMG "}/>
       </Box>
-      <PostFooter post={post} creatorProfile={useProfile} />
+      <PostFooter post={post} creatorProfile={userProfile} />
     </>
 }
 

@@ -19,7 +19,7 @@ const usePreviewimg = () => {
                 setSelectedFile(reader.result)
             }
 
-            reader.readAsDataURL(file)
+            reader.readAsDataURL(file) 
             
         } else {
             showToast("Error", "Please select an image file", "error")

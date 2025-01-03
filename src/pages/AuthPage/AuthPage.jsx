@@ -18,7 +18,7 @@ const AuthPage = () => {
                   <Box textAlign={"center"}>Get the App</Box>
                   <Flex gap={5} justifyContent={"center"}>
                       <Image src='/playstore.png' h={10} alt='Playstore logo' />
-                      <Image src='/microsoft.png' h={10} alt='Playstore logo'/>
+                       <Image src='/microsoft.png' h={10} alt='Playstore logo'/>
 
                       
                   </Flex>

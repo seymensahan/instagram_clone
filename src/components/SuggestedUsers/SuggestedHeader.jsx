@@ -20,10 +20,10 @@ const SuggestedHeader = () => {
     return (
         <Flex justifyContent={"space-between"} alignItems={"center"} w={"full"}>
             <Flex alignItems={"center"} gap={2}>
-                <Link to={`/${authUser.username}`}>
-                    <Avatar size={"lg"} src='/profilepic.png' />
+                <Link to={`${authUser.username}`}>
+                    <Avatar size={"lg"} src={authUser.profilePicURL} />
                 </Link>
-                <Link to={`/${authUser.username}`}>
+                <Link to={`${authUser.username}`}>
                 <Text fontSize={12} fontWeight={"bold"}>
                     {authUser.username}
                     </Text>

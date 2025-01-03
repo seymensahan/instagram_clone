@@ -1,3 +1,4 @@
+
 import {
   Avatar,
   AvatarGroup,
@@ -7,14 +8,37 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
+import { useEffect } from "react";
+import { doc, onSnapshot } from "firebase/firestore";
+import { firestore } from "../../firebase/firebase";
 import useUserProfileStore from "../../store/userProfileStore";
 import useAuthStore from "../../store/authStore";
 import EditProfile from "./EditProfile";
 import useFollowUser from "../../hooks/useFollowUser";
 
 const ProfileHeader = () => {
-  const { userProfile } = useUserProfileStore();
+  const { userProfile, setUserProfile } = useUserProfileStore();
   const authUser = useAuthStore((state) => state.user);
+
+  // Replacing useProfileListener with direct functionality
+  useEffect(() => {
+    if (!authUser?.id) return;
+
+    const unsubscribe = onSnapshot(
+      doc(firestore, "users", authUser.id),
+      (doc) => {
+        if (doc.exists()) {
+          setUserProfile(doc.data());
+        }
+      },
+      (error) => {
+        console.error("Error fetching user profile: ", error);
+      }
+    );
+
+    return () => unsubscribe();
+  }, [authUser?.id, setUserProfile]);
+
   const visitingOwnProfileAndAuth =
     authUser && authUser.username === userProfile.username;
   const visitingAnotherProfileAndAuth =
@@ -33,7 +57,7 @@ const ProfileHeader = () => {
         justifySelf={"center"}
         alignSelf={"flex-start"}
       >
-        <Avatar src={userProfile.profilePicUrl} alt="Jay jo" />
+        <Avatar src={userProfile.profilePicURL} alt="Jay jo" />
       </AvatarGroup>
       <VStack alignItems={"start"} gap={2} mx={"auto"} flex={1}>
         <Flex

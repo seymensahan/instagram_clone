@@ -1,3 +1,4 @@
+
 import { Avatar, Box, Button, Flex, VStack } from "@chakra-ui/react";
 import useFollowUser from "../../hooks/useFollowUser";
 import useAuthStore from "../../store/authStore";
@@ -12,8 +13,8 @@ const SuggestedUser = ({ user, setUser }) => {
 		setUser({
 			...user,
 			followers: isFollowing
-				? user.followers.filter((follower) => follower.uid !== authUser.uid)
-				: [...user.followers, authUser],
+				? (user.followers || []).filter((follower) => follower.uid !== authUser.uid)
+				: [...(user.followers || []), authUser],
 		});
 	};
 
@@ -30,7 +31,7 @@ const SuggestedUser = ({ user, setUser }) => {
 						</Box>
 					</Link>
 					<Box fontSize={11} color={"gray.500"}>
-						{user.followers.length} followers
+						{(user.followers?.length || 0)} followers
 					</Box>
 				</VStack>
 			</Flex>

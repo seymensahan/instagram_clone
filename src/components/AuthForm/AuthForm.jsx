@@ -18,7 +18,7 @@ const AuthForm = () => {
           {/* ----------- OR ----------- */}
           <Flex
             alignItems={"Center"}
-            justifyConent={"center"}
+            justifyconent={"center"}
             my={4}
             gap={1}
             w={"full"}

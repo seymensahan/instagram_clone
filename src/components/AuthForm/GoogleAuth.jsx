@@ -56,7 +56,7 @@ const GoogleAuth = ({ prefix }) => {
   return (
     <Flex
     alignItems={"Center"}
-    justifyConent={"center"}
+    justifyconent={"center"}
       cursor={"pointer"}
       onClick={handleGoogleAuth}
   >

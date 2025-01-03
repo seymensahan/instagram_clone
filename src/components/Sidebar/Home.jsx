@@ -25,7 +25,8 @@ const Home = () => {
       w={{ base: 10, md: "full" }}
       justifyContent={{ base: "center", md: "flex-start" }}
     >
-      {AiFillHome}
+      <AiFillHome  size={25} />
+      
       <Box display={{ base: "none", md: "block" }}>Home</Box>
     </Link>
   </Tooltip>

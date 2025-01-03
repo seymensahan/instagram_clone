@@ -11,7 +11,7 @@ const useEditProfile = () => {
     const [isUpdating, setIsUpdating] = useState(false)
 
     const authUser = useAuthStore((state) => state.user)
-    const setAuthUser = useAuthStore((state) => state.user)
+    const setAuthUser = useAuthStore((state) => state.setUser)
     const setUserProfile = useUserProfileStore((state) => state.setUserProfile)
 
     const showToast = useshowToast()
@@ -23,27 +23,39 @@ const useEditProfile = () => {
         const storageRef = ref(storage,`profilePics/${authUser.uid}`)
         const userDocRef = doc(firestore, "users",authUser.uid)
          
-        let URL =""
+        let URL = authUser.profilePicURL || ""; // Retain existing URL if no new file
         try {
+            // if (selectedFile) {
+            //     await uploadString(storageRef, "users", authUser.uid)
+            //     URL=await getDownloadURL(ref(storage,`profilePics/${authUser.uid}`))
+            // }
             if (selectedFile) {
-                await uploadString(storageRef, "users", authUser.uid)
-                URL=await getDownloadURL(ref(storage,`profilePics/${authUser.uid}`))
+                await uploadString(storageRef, selectedFile, 'data_url');
+                URL = await getDownloadURL(storageRef);
             }
+            
 
             const updatedUser = {
                 ...authUser,
                 fullName: inputs.fullName || authUser.fullName,
-                fullName: inputs.userame || authUser.username,
+                username: inputs.username || authUser.username,
                 bio: inputs.bio || authUser.bio,
                 profilePicURL: URL || authUser.profilePicURL
             }
 
-            await updateDoc(userDocRef, updatedUser)
-            localStorage.setItem("user-info", JSON.stringify(updatedUser))
-            setAuthUser(updatedUser)
-            setUserProfile(updatedUser)
-            showToast("Success","Profile updated succesfully","success")
+            
 
+            await updateDoc(userDocRef, {
+                fullName: updatedUser.fullName,
+                username: updatedUser.username,
+                bio: updatedUser.bio,
+                profilePicURL: updatedUser.profilePicURL,
+            });
+
+            localStorage.setItem("user-info", JSON.stringify(updatedUser));
+            setAuthUser(updatedUser);
+            setUserProfile(updatedUser);
+            showToast("Success", "Profile updated successfully", "success");
         } catch (error) {
             showToast("Error",error.message,"error")
         }
